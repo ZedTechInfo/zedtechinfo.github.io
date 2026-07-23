@@ -41,10 +41,8 @@ function initializeApplication() {
     
     // Setup main interactions
     setupMainInteractions();
-    
-    // Setup form handling
-    setupFormHandling();
-    
+    // Form submission is handled by contact.js (EmailJS)
+
     // Setup performance monitoring
     setupPerformanceMonitoring();
 }
@@ -106,6 +104,28 @@ function setupMainInteractions() {
         });
     });
     
+    // Back to top rocket
+    const backToTop = document.getElementById('backToTop');
+    if (backToTop) {
+        window.addEventListener('scroll', function() {
+            backToTop.classList.toggle('visible', window.scrollY > 600);
+        });
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    // Discord: no profile URL, copy username instead
+    const discordLink = document.getElementById('discordLink');
+    if (discordLink) {
+        discordLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            navigator.clipboard.writeText('cyb3r.k1d')
+                .then(() => showNotification('Discord username copied: cyb3r.k1d', 'success'))
+                .catch(() => showNotification('Discord: cyb3r.k1d', 'info'));
+        });
+    }
+
     // Social link interactions
     const socialLinks = document.querySelectorAll('.social-link');
     socialLinks.forEach(link => {
@@ -117,52 +137,6 @@ function setupMainInteractions() {
             this.style.boxShadow = 'none';
         });
     });
-}
-
-function setupFormHandling() {
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = this.querySelector('.btn-launch');
-            const originalText = submitBtn.innerHTML;
-            
-            // Validate form
-            const name = this.querySelector('#name').value.trim();
-            const email = this.querySelector('#email').value.trim();
-            const message = this.querySelector('#message').value.trim();
-            
-            if (!name || !email || !message) {
-                showNotification('Please fill in all fields', 'error');
-                return;
-            }
-            
-            if (!isValidEmail(email)) {
-                showNotification('Please enter a valid email address', 'error');
-                return;
-            }
-            
-            // Simulate form submission
-            submitBtn.innerHTML = '<i class="fas fa-satellite-dish fa-spin"></i> Transmitting...';
-            submitBtn.disabled = true;
-            
-            setTimeout(() => {
-                submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Message Sent!';
-                submitBtn.style.background = 'linear-gradient(135deg, #00ff88, #00cc66)';
-                showNotification('Message transmitted successfully! I\'ll get back to you soon.', 'success');
-                
-                // Reset form
-                this.reset();
-                
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                    submitBtn.style.background = 'transparent';
-                }, 3000);
-            }, 2000);
-        });
-    }
 }
 
 function setupPerformanceMonitoring() {
@@ -203,12 +177,6 @@ function setupPerformanceMonitoring() {
             }
         }, 5000);
     }
-}
-
-// Utility functions
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
 }
 
 function showNotification(message, type = 'info') {

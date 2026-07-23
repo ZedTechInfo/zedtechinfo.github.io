@@ -13,7 +13,7 @@ function setupScrollAnimations() {
                 entry.target.style.transform = 'translateY(0)';
                 
                 // Add staggered animation for child elements
-                const children = entry.target.querySelectorAll('.skill-item, .interest-card, .project-card, .timeline-item');
+                const children = entry.target.querySelectorAll('.skill-item, .interest-card, .project-card, .timeline-item, .cert-card');
                 children.forEach((child, index) => {
                     setTimeout(() => {
                         child.style.opacity = '1';
@@ -34,7 +34,7 @@ function setupScrollAnimations() {
     });
 
     // Animate individual elements
-    const animatedElements = document.querySelectorAll('.skill-item, .interest-card, .project-card, .timeline-item');
+    const animatedElements = document.querySelectorAll('.skill-item, .interest-card, .project-card, .timeline-item, .cert-card');
     animatedElements.forEach(element => {
         element.style.opacity = '0';
         element.style.transform = 'translateY(20px)';
@@ -53,21 +53,40 @@ function setupFloatingCards() {
     });
 }
 
-// Typewriter effect for hero text
+// Rotating typewriter effect for hero role
 function setupTypewriterEffect() {
-    const title = document.querySelector('.name');
-    const subtitle = document.querySelector('.title');
-    
-    if (title && subtitle) {
-        // Add typewriter class for CSS animation
-        setTimeout(() => {
-            title.classList.add('typewriter');
-        }, 500);
-        
-        setTimeout(() => {
-            subtitle.classList.add('typewriter');
-        }, 1500);
+    const subtitle = document.getElementById('roleRotator');
+    if (!subtitle) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const roles = [
+        'Full-Stack Developer & Cybersecurity Specialist',
+        'Systems Engineer | DevOps | Linux Enthusiast',
+        'ISO 27001 Lead Implementer & Lead Auditor',
+        'Ethical Hacker & FinTech Innovator'
+    ];
+
+    subtitle.classList.add('typing');
+    let roleIndex = 0, charIndex = roles[0].length, deleting = true;
+
+    function tick() {
+        const current = roles[roleIndex];
+        charIndex += deleting ? -1 : 1;
+        subtitle.textContent = current.slice(0, charIndex);
+
+        let delay = deleting ? 35 : 70;
+        if (!deleting && charIndex === current.length) {
+            deleting = true;
+            delay = 3000; // pause on full phrase
+        } else if (deleting && charIndex === 0) {
+            deleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            delay = 400;
+        }
+        setTimeout(tick, delay);
     }
+
+    setTimeout(tick, 3000); // let the entrance animation finish first
 }
 
 // Particle trail effect for mouse movement

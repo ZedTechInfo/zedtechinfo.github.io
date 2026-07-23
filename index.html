@@ -35,6 +35,7 @@
         <a href="#skills" class="nav-link">Skills</a>
         <a href="#interests" class="nav-link">Interests</a>
         <a href="#experience" class="nav-link">Experience</a>
+        <a href="#credentials" class="nav-link">Credentials</a>
         <a href="#projects" class="nav-link">Projects</a>
         <a href="#contact" class="nav-link">Contact</a>
     </nav>
@@ -43,7 +44,7 @@
     <section id="home" class="galaxy-section hero">
         <div class="content">
             <h1 class="name">Gary Kamoto Mhone</h1>
-            <h2 class="title">Computer Engineer | Full-Stack Developer & Cybersecurity Specialist</h2>
+            <h2 class="title" id="roleRotator">Full-Stack Developer &amp; Cybersecurity Specialist</h2>
             <p class="subtitle">👋 Also known as <span style="color: var(--accent);">Cyb3rK1d</span> • Linux Enthusiast • Mobile Gamer</p>
             
             <div class="contact-info">
@@ -76,7 +77,7 @@
                         <h3>Development</h3>
                         <ul class="skill-list">
                             <li class="skill-item">JavaScript (ES6+)</li>
-                            <li class="skill-item">ReactJS & React Native</li>
+                            <li class="skill-item">ReactJS, NextJS & React Native</li>
                             <li class="skill-item">Elixir & Phoenix Framework</li>
                             <li class="skill-item">Python & Django</li>
                             <li class="skill-item">PHP & Laravel</li>
@@ -93,12 +94,16 @@
                             <li class="skill-item">Network Security</li>
                             <li class="skill-item">Encryption & Cryptography</li>
                             <li class="skill-item">Security Auditing</li>
+                            <li class="skill-item">ISO 27001 & PCI DSS Compliance</li>
+                            <li class="skill-item">SIEM & XDR Operations</li>
                         </ul>
                     </div>
                     <div class="skill-category">
                         <h3>Infrastructure</h3>
                         <ul class="skill-list">
-                            <li class="skill-item">Database Design & SQL</li>
+                            <li class="skill-item">PostgreSQL & Database Design</li>
+                            <li class="skill-item">Kubernetes & DevOps</li>
+                            <li class="skill-item">SCADA & PLC Systems</li>
                             <li class="skill-item">Server Management</li>
                             <li class="skill-item">RESTful & GraphQL APIs</li>
                             <li class="skill-item">Network Configuration</li>
@@ -163,27 +168,51 @@
         <div class="content">
             <h2 class="section-heading">Professional Journey</h2>
             <div class="timeline">
-                <!-- TechPay -->
+                <!-- TechPay - Dev -->
                 <div class="timeline-item">
                     <div class="timeline-content">
                         <div class="timeline-date">March 2024 - Present</div>
                         <h3 class="timeline-title">Software Developer</h3>
-                        <span class="timeline-company">TechPay Zambia Limited, Lusaka</span>
+                        <span class="timeline-company">TechPay Limited, Lusaka</span>
                         <ul>
-                            <li class="timeline-description">Developed optimized multi-platform notification system for real-time transaction statements</li>
-                            <li class="timeline-description">Created and trained WhatsApp chatbot for bill payment services</li>
-                            <li class="timeline-description">Administer all MPGS merchant accounts and provide client guidance</li>
-                            <li class="timeline-description">Scaled payment gateway to support 10x merchant growth while optimizing payment processing</li>
+                            <li class="timeline-description">Spearheaded merchant network expansion from 10+ to 100+ registered merchants, boosting daily transaction volumes</li>
+                            <li class="timeline-description">Engineered systems handling thousands of daily mobile money and card transactions</li>
+                            <li class="timeline-description">Diversified payment processing across POS terminals, USSD interfaces, and web services</li>
+                            <li class="timeline-description">Built multi-platform notification system and WhatsApp chatbot for bill payment services</li>
                         </ul>
                     </div>
                 </div>
-                
+
+                <!-- TechPay - ISO -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">April 2025 - May 2026</div>
+                        <h3 class="timeline-title">Information Security Officer</h3>
+                        <span class="timeline-company">TechPay Limited, Lusaka</span>
+                        <ul>
+                            <li class="timeline-description">Led operationalization of TechPay's cybersecurity function — phased roadmap, SIEM &amp; XDR tooling, and risk assessment workflows</li>
+                            <li class="timeline-description">Implemented company-wide cybersecurity framework aligned with ISO 27001 and Zambia's Cybersecurity Act No. 3</li>
+                            <li class="timeline-description">Established policies on incident response, access control, and merchant risk management</li>
+                            <li class="timeline-description">Performed penetration testing of internal platforms and continuous merchant URL auditing for MCC compliance on MPGS</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- TechMasters -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">March 2024 - April 2025</div>
+                        <h3 class="timeline-title">Software Developer</h3>
+                        <span class="timeline-company">TechMasters Zambia Limited, Lusaka</span>
+                    </div>
+                </div>
+
                 <!-- Premier Credit -->
                 <div class="timeline-item">
                     <div class="timeline-content">
-                        <div class="timeline-date">August 2023 - March 2024</div>
+                        <div class="timeline-date">August 2023 - April 2024</div>
                         <h3 class="timeline-title">Product Engineer</h3>
-                        <span class="timeline-company">Premier Credit Limited, Lusaka</span>
+                        <span class="timeline-company">PremierCredit, Lusaka</span>
                         <ul>
                             <li class="timeline-description">Translated user needs into technical specifications</li>
                             <li class="timeline-description">Designed and developed innovative software solutions</li>
@@ -192,12 +221,12 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="timeline-item">
                     <div class="timeline-content">
-                        <div class="timeline-date">June 2022 - March 2024</div>
+                        <div class="timeline-date">June 2022 - April 2024</div>
                         <h3 class="timeline-title">Software Engineer</h3>
-                        <span class="timeline-company">Premier Credit Limited, Lusaka</span>
+                        <span class="timeline-company">PremierCredit, Lusaka</span>
                         <ul>
                             <li class="timeline-description">Developed Elixir/Phoenix application for SMPP integration with Airtel Zambia SMS</li>
                             <li class="timeline-description">Created REST APIs with OAuth authentication protocols</li>
@@ -206,10 +235,100 @@
                         </ul>
                     </div>
                 </div>
+
+                <!-- Probase -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">December 2020 - June 2022</div>
+                        <h3 class="timeline-title">Computer Software Engineer</h3>
+                        <span class="timeline-company">Probase Limited, Lusaka</span>
+                    </div>
+                </div>
+
+                <!-- TechnoBrains -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">June 2020 - December 2020</div>
+                        <h3 class="timeline-title">BPO Executive</h3>
+                        <span class="timeline-company">TechnoBrains IT Solution Private Limited, Zambia</span>
+                    </div>
+                </div>
+
+                <!-- SoftEdge -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">August 2015 - December 2015</div>
+                        <h3 class="timeline-title">Network Engineer</h3>
+                        <span class="timeline-company">SoftEdge Consulting Ltd, Lusaka</span>
+                        <ul>
+                            <li class="timeline-description">Set up and managed networks for the company and clients, with on-site and online support</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- iSAT -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">March 2015 - April 2015</div>
+                        <h3 class="timeline-title">Intern</h3>
+                        <span class="timeline-company">iSAT, Lusaka</span>
+                        <ul>
+                            <li class="timeline-description">Worked hand in hand with the technical team, gaining experience from qualified network engineers</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
     
+    <!-- Certifications & Education Section -->
+    <section id="credentials" class="galaxy-section">
+        <div class="content">
+            <h2 class="section-heading">Mission Badges</h2>
+            <div class="cert-grid">
+                <div class="cert-card">
+                    <div class="cert-icon"><i class="fas fa-user-shield"></i></div>
+                    <h3>CISMP</h3>
+                    <p>Information Security Management Practitioner</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                    <h3>ISO 27001:2022</h3>
+                    <p>Certified Lead Auditor &amp; Lead Implementer</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon"><i class="fas fa-credit-card"></i></div>
+                    <h3>PCI DSS</h3>
+                    <p>Certified — Payment Card Industry Data Security Standard</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon"><i class="fas fa-industry"></i></div>
+                    <h3>Critical Infrastructure</h3>
+                    <p>Introduction to Critical Infrastructure Protection</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon"><i class="fas fa-trophy"></i></div>
+                    <h3>Innovation Award</h3>
+                    <p>Honors &amp; Awards</p>
+                </div>
+            </div>
+
+            <h2 class="section-heading">Education</h2>
+            <div class="cert-grid edu-grid">
+                <div class="cert-card">
+                    <div class="cert-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>ALX Africa</h3>
+                    <p>Computer Software Engineering<br>2023 - 2024</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>Evelyn Hone College</h3>
+                    <p>Diploma, Computer Science<br>2017 - 2019</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Projects Section -->
     <section id="projects" class="galaxy-section">
         <div class="content">
@@ -220,6 +339,7 @@
                         <i class="fas fa-comment-dots"></i>
                     </div>
                     <div class="project-content">
+                        <span class="project-status live"><span class="status-dot"></span>Live &amp; Active</span>
                         <h3 class="project-title">Multi-Platform Notification System</h3>
                         <p class="project-description">Real-time transaction notifications via SMS, email, and instant messaging for TechPay Zambia.</p>
                         <div class="project-tech">
@@ -236,6 +356,7 @@
                         <i class="fab fa-whatsapp"></i>
                     </div>
                     <div class="project-content">
+                        <span class="project-status live"><span class="status-dot"></span>Live &amp; Active</span>
                         <h3 class="project-title">WhatsApp Bill Payment Chatbot</h3>
                         <p class="project-description">AI-powered chatbot enabling users to purchase bill payment services via WhatsApp.</p>
                         <div class="project-tech">
@@ -248,14 +369,92 @@
                 
                 <div class="project-card">
                     <div class="project-image">
+                        <i class="fas fa-satellite"></i>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-status live"><span class="status-dot"></span>Live &amp; Active</span>
+                        <h3 class="project-title">TechPay Payment Gateway</h3>
+                        <p class="project-description">Scaled merchant network from 10+ to 100+ merchants, processing thousands of daily transactions across POS, USSD, and web.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Laravel</span>
+                            <span class="tech-tag">MPGS</span>
+                            <span class="tech-tag">USSD</span>
+                            <span class="tech-tag">Mobile Money</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://techpay.co.zm" target="_blank" rel="noopener" class="project-link"><i class="fas fa-external-link-alt"></i> Visit Site</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-status live"><span class="status-dot"></span>Live &amp; Active</span>
+                        <h3 class="project-title">Todo AI MCP</h3>
+                        <p class="project-description">Local-first todo, summary &amp; review manager with online sync and Claude Code session-history search — published as an npm MCP server with a live web app.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">MCP</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">AI</span>
+                            <span class="tech-tag">npm</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://cybers-todo.vercel.app" target="_blank" rel="noopener" class="project-link"><i class="fas fa-external-link-alt"></i> Live App</a>
+                            <a href="https://www.npmjs.com/package/@cyb3rk1d/todo-ai-mcp" target="_blank" rel="noopener" class="project-link"><i class="fab fa-npm"></i> npm</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-signal"></i>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-status oss"><span class="status-dot"></span>Open Source</span>
+                        <h3 class="project-title">Zambia Mobile Networks</h3>
+                        <p class="project-description">Elixir library that identifies which Zambian mobile network (Airtel, MTN, Zamtel) a phone number belongs to. Published on Hex.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Elixir</span>
+                            <span class="tech-tag">Hex</span>
+                            <span class="tech-tag">Telecom</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://hex.pm/packages/zambia_mobile_networks" target="_blank" rel="noopener" class="project-link"><i class="fas fa-cube"></i> Hex Package</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-status live"><span class="status-dot"></span>Live &amp; Active</span>
+                        <h3 class="project-title">CyberLoans Platform</h3>
+                        <p class="project-description">Multi-tenant loan management system with company-scoped dashboards, super-admin control, and JWT-secured REST APIs.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">REST APIs</span>
+                            <span class="tech-tag">JWT Auth</span>
+                            <span class="tech-tag">Multi-Tenant</span>
+                            <span class="tech-tag">FinTech</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <div class="project-content">
+                        <span class="project-status completed"><span class="status-dot"></span>Mission Complete</span>
                         <h3 class="project-title">Bank Application Security Suite</h3>
                         <p class="project-description">Security framework for bank applications including OTC, Proxy, NAPSA, and NATSAVE.</p>
                         <div class="project-tech">
                             <span class="tech-tag">Pen Testing</span>
-                            <span class="tech-tag">WAFaf</span>
+                            <span class="tech-tag">WAF</span>
                             <span class="tech-tag">Maltego</span>
                             <span class="tech-tag">Encryption</span>
                         </div>
@@ -347,15 +546,20 @@
     <!-- Footer -->
     <footer class="space-footer">
         <div class="social-links">
-            <a href="#" class="social-link" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://github.com/ZedTechInfo" class="social-link" title="GitHub" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
             <a href="https://www.linkedin.com/in/gary-mhone" class="social-link" title="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="social-link" title="Telegram"><i class="fab fa-telegram"></i></a>
-            <a href="#" class="social-link" title="Discord"><i class="fab fa-discord"></i></a>
+            <a href="https://t.me/IAmBlackHat" class="social-link" title="Telegram" target="_blank"><i class="fab fa-telegram"></i></a>
+            <a href="#" class="social-link" id="discordLink" title="Discord: cyb3r.k1d (click to copy)"><i class="fab fa-discord"></i></a>
         </div>
         <p>&copy; 2025 <span style="color: var(--accent);">Cyb3rK1d</span>. All systems operational.</p>
         <p>Let's build something awesome! 🚀</p>
     </footer>
     
+    <!-- Back to top rocket -->
+    <button class="back-to-top" id="backToTop" title="Back to top" aria-label="Back to top">
+        <i class="fas fa-rocket"></i>
+    </button>
+
     <!-- Scripts -->
     <script src="js/starfield.js"></script>
     <script src="js/navigation.js"></script>
