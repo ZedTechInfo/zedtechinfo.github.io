@@ -601,3 +601,38 @@
     box-shadow: 0 0 20px var(--accent);
     transform: translateY(-5px) rotate(-45deg);
 }
+
+/* Launch / land / fade sequence */
+.back-to-top.launching,
+.back-to-top.landing {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: none;
+}
+
+.back-to-top.launching {
+    animation: rocket-launch 0.9s ease-in forwards;
+    box-shadow: 0 0 25px var(--accent), 0 8px 20px rgba(76, 201, 240, 0.5);
+}
+
+.back-to-top.landing {
+    animation: rocket-land 1s ease-out forwards;
+}
+
+.back-to-top.fading {
+    transition: opacity 1.2s ease;
+    opacity: 0;
+}
+
+@keyframes rocket-launch {
+    0% { transform: translateY(0) rotate(-45deg); }
+    15% { transform: translateY(5px) rotate(-45deg); }  /* crouch before liftoff */
+    100% { transform: translateY(-110vh) rotate(-45deg); }
+}
+
+@keyframes rocket-land {
+    0% { transform: translateY(-110vh) rotate(-45deg); }
+    70% { transform: translateY(0) rotate(-45deg); }
+    85% { transform: translateY(-8px) rotate(-45deg); } /* soft touchdown bounce */
+    100% { transform: translateY(0) rotate(-45deg); }
+}

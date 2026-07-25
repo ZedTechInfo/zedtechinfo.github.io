@@ -104,14 +104,41 @@ function setupMainInteractions() {
         });
     });
     
-    // Back to top rocket
+    // Back to top rocket: launch, land at the top, fade away
     const backToTop = document.getElementById('backToTop');
     if (backToTop) {
+        const inFlight = () => backToTop.classList.contains('launching') || backToTop.classList.contains('landing');
+
         window.addEventListener('scroll', function() {
+            if (inFlight()) return; // don't hide mid-animation
             backToTop.classList.toggle('visible', window.scrollY > 600);
         });
+
         backToTop.addEventListener('click', function() {
+            if (inFlight()) return;
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            backToTop.classList.add('launching');
+
+            const checkArrival = () => {
+                if (window.scrollY <= 0) {
+                    backToTop.classList.remove('launching');
+                    backToTop.classList.add('landing');
+                    backToTop.addEventListener('animationend', function onLand() {
+                        backToTop.removeEventListener('animationend', onLand);
+                        backToTop.classList.add('fading');
+                        setTimeout(() => {
+                            backToTop.classList.remove('landing', 'fading', 'visible');
+                        }, 1200);
+                    });
+                } else {
+                    requestAnimationFrame(checkArrival);
+                }
+            };
+            requestAnimationFrame(checkArrival);
         });
     }
 
