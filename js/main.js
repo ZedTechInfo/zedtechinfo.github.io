@@ -104,27 +104,50 @@ function setupMainInteractions() {
         });
     });
     
-    // Back to top rocket: launch, land at the top, fade away
+    // Back to top rocket: ignition -> liftoff -> momentum scroll -> landing -> fade
     const backToTop = document.getElementById('backToTop');
     if (backToTop) {
-        const inFlight = () => backToTop.classList.contains('launching') || backToTop.classList.contains('landing');
+        const IGNITION_MS = 1100;
 
         window.addEventListener('scroll', function() {
-            if (inFlight()) return; // don't hide mid-animation
+            if (backToTop.dataset.flight) return; // don't hide mid-animation
             backToTop.classList.toggle('visible', window.scrollY > 600);
         });
 
         backToTop.addEventListener('click', function() {
-            if (inFlight()) return;
+            if (backToTop.dataset.flight) return;
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
 
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            backToTop.dataset.flight = 'true';
 
-            backToTop.classList.add('launching');
+            // Phase 1: ignition — flames on, rocket rumbles, page shakes
+            backToTop.classList.add('igniting');
+            document.body.classList.add('page-shake');
 
-            const checkArrival = () => {
-                if (window.scrollY <= 0) {
+            setTimeout(() => {
+                // Phase 2: liftoff — rocket climbs off screen, page follows with building momentum
+                backToTop.classList.remove('igniting');
+                backToTop.classList.add('launching');
+                setTimeout(() => document.body.classList.remove('page-shake'), 400);
+
+                const startY = window.scrollY;
+                const duration = Math.min(3000, Math.max(1400, startY * 0.6));
+                const t0 = performance.now();
+                // easeInOutCubic: slow build off the pad, full speed, then brake for landing
+                const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+                function step(now) {
+                    const p = Math.min((now - t0) / duration, 1);
+                    window.scrollTo(0, startY * (1 - ease(p)));
+                    if (p < 1) {
+                        requestAnimationFrame(step);
+                        return;
+                    }
+                    // Phase 3: touchdown — retro-burn descent, then fade out
                     backToTop.classList.remove('launching');
                     backToTop.classList.add('landing');
                     backToTop.addEventListener('animationend', function onLand() {
@@ -132,13 +155,12 @@ function setupMainInteractions() {
                         backToTop.classList.add('fading');
                         setTimeout(() => {
                             backToTop.classList.remove('landing', 'fading', 'visible');
+                            delete backToTop.dataset.flight;
                         }, 1200);
                     });
-                } else {
-                    requestAnimationFrame(checkArrival);
                 }
-            };
-            requestAnimationFrame(checkArrival);
+                requestAnimationFrame(step);
+            }, IGNITION_MS);
         });
     }
 

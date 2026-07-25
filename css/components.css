@@ -587,36 +587,97 @@
     backdrop-filter: blur(10px);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(20px) rotate(-45deg);
+    transform: translateY(20px);
     transition: all 0.3s ease;
+}
+
+.back-to-top i {
+    display: inline-block;
+    transform: rotate(-45deg); /* fa-rocket points up-right; make it point straight up */
 }
 
 .back-to-top.visible {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0) rotate(-45deg);
+    transform: translateY(0);
 }
 
 .back-to-top:hover {
     box-shadow: 0 0 20px var(--accent);
-    transform: translateY(-5px) rotate(-45deg);
+    transform: translateY(-5px);
 }
 
-/* Launch / land / fade sequence */
+/* Exhaust flame (hidden until ignition) */
+.back-to-top::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 92%;
+    width: 14px;
+    height: 36px;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, #fff 0%, #ffd166 25%, #ff7b00 60%, rgba(255, 60, 0, 0) 100%);
+    border-radius: 50% 50% 50% 50% / 15% 15% 85% 85%;
+    filter: blur(1px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.back-to-top.igniting::after,
+.back-to-top.launching::after,
+.back-to-top.landing::after {
+    opacity: 1;
+    animation: flame-flicker 0.12s linear infinite;
+}
+
+@keyframes flame-flicker {
+    0%, 100% { transform: translateX(-50%) scale(1, 1); }
+    50% { transform: translateX(-52%) scale(0.85, 1.3); }
+}
+
+/* Ignition: rocket rumbles in place while thrust builds */
+.back-to-top.igniting,
 .back-to-top.launching,
 .back-to-top.landing {
     opacity: 1;
     visibility: visible;
     pointer-events: none;
+    background: rgba(10, 10, 42, 0.9);
 }
 
+.back-to-top.igniting {
+    animation: rocket-rumble 0.1s linear infinite;
+    box-shadow: 0 0 25px var(--accent), 0 10px 25px rgba(255, 123, 0, 0.5);
+}
+
+@keyframes rocket-rumble {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-1.5px, 1px); }
+    50% { transform: translate(1.5px, -1.5px); }
+    75% { transform: translate(-1px, -1px); }
+}
+
+/* Liftoff: slow crawl off the pad, then full throttle */
 .back-to-top.launching {
-    animation: rocket-launch 0.9s ease-in forwards;
-    box-shadow: 0 0 25px var(--accent), 0 8px 20px rgba(76, 201, 240, 0.5);
+    animation: rocket-launch 1.6s cubic-bezier(0.75, 0.05, 0.9, 0.5) forwards;
+    box-shadow: 0 0 25px var(--accent), 0 10px 25px rgba(255, 123, 0, 0.5);
 }
 
+@keyframes rocket-launch {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-120vh); }
+}
+
+/* Retro-burn landing with a soft touchdown bounce */
 .back-to-top.landing {
-    animation: rocket-land 1s ease-out forwards;
+    animation: rocket-land 1.1s ease-out forwards;
+}
+
+@keyframes rocket-land {
+    0% { transform: translateY(-120vh); }
+    75% { transform: translateY(0); }
+    88% { transform: translateY(-8px); }
+    100% { transform: translateY(0); }
 }
 
 .back-to-top.fading {
@@ -624,15 +685,15 @@
     opacity: 0;
 }
 
-@keyframes rocket-launch {
-    0% { transform: translateY(0) rotate(-45deg); }
-    15% { transform: translateY(5px) rotate(-45deg); }  /* crouch before liftoff */
-    100% { transform: translateY(-110vh) rotate(-45deg); }
+/* Page-wide rumble during ignition (sections only — fixed elements stay put) */
+body.page-shake .galaxy-section,
+body.page-shake .space-footer {
+    animation: page-shake 0.12s linear infinite;
 }
 
-@keyframes rocket-land {
-    0% { transform: translateY(-110vh) rotate(-45deg); }
-    70% { transform: translateY(0) rotate(-45deg); }
-    85% { transform: translateY(-8px) rotate(-45deg); } /* soft touchdown bounce */
-    100% { transform: translateY(0) rotate(-45deg); }
+@keyframes page-shake {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-2px, 1px); }
+    50% { transform: translate(2px, -1px); }
+    75% { transform: translate(-1px, 2px); }
 }
