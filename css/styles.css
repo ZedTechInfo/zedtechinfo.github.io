@@ -112,7 +112,7 @@ body {
     font-style: italic;
 }
 
-.contact-info {
+.hero .contact-info {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
