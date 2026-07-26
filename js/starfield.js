@@ -29,7 +29,11 @@ function createStarfield() {
         star.style.width = `${size}px`;
         star.style.height = `${size}px`;
         star.style.setProperty('--duration', `${duration}s`);
-        
+
+        // Staggered warp streak timing (negative delay = already mid-streak when warp starts)
+        star.style.setProperty('--warp-dur', `${(Math.random() * 0.45 + 0.35).toFixed(2)}s`);
+        star.style.setProperty('--warp-delay', `${(-Math.random()).toFixed(2)}s`);
+
         // Random opacity
         star.style.opacity = Math.random() * 0.8 + 0.2;
         

@@ -47,34 +47,72 @@ function initializeApplication() {
     setupPerformanceMonitoring();
 }
 
+// Scroll with rocket physics: slow build off the pad, full speed, brake on approach
+function momentumScrollTo(targetY, onArrive) {
+    const startY = window.scrollY;
+    const distance = targetY - startY;
+    const duration = Math.min(3000, Math.max(1400, Math.abs(distance) * 0.6));
+    const t0 = performance.now();
+    const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; // easeInOutCubic
+
+    function step(now) {
+        const p = Math.min((now - t0) / duration, 1);
+        window.scrollTo(0, startY + distance * ease(p));
+        if (p < 1) {
+            requestAnimationFrame(step);
+        } else if (onArrive) {
+            onArrive();
+        }
+    }
+    requestAnimationFrame(step);
+}
+
 function setupMainInteractions() {
-    // Launch Mission button functionality
+    // Launch Mission button: ignition -> reverse warp flight down to the contact pad
     const launchBtn = document.getElementById('launchBtn');
     if (launchBtn) {
         launchBtn.addEventListener('click', function() {
-            // Scroll to contact section
             const contactSection = document.getElementById('contact');
-            if (contactSection) {
+            if (!contactSection || this.dataset.flight) return;
+
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 contactSection.scrollIntoView({ behavior: 'smooth' });
+                return;
             }
-            
-            // Button animation
-            const originalText = this.innerHTML;
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Launching...';
-            this.disabled = true;
-            
+
+            const btn = this;
+            btn.dataset.flight = 'true';
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+
+            // Phase 1: ignition — the hero section (button included) rumbles via page-shake
+            btn.innerHTML = '<i class="fas fa-fire"></i> Ignition...';
+            btn.classList.add('igniting');
+            document.body.classList.add('page-shake');
+
             setTimeout(() => {
-                this.innerHTML = '<i class="fas fa-rocket"></i> Mission Launched!';
-                this.style.background = 'linear-gradient(135deg, #00ff88, #00cc66)';
-                this.style.borderColor = '#00ff88';
-            }, 1500);
-            
-            setTimeout(() => {
-                this.innerHTML = originalText;
-                this.disabled = false;
-                this.style.background = 'transparent';
-                this.style.borderColor = 'var(--accent)';
-            }, 4000);
+                // Phase 2: liftoff — descend to contact at warp (stars streak upward)
+                btn.classList.remove('igniting');
+                btn.innerHTML = '<i class="fas fa-rocket"></i> Launching...';
+                setTimeout(() => document.body.classList.remove('page-shake'), 400);
+                setTimeout(() => document.body.classList.add('warp-reverse'), 300);
+
+                momentumScrollTo(contactSection.offsetTop - 20, () => {
+                    // Phase 3: arrival — drop out of warp, mission accomplished
+                    document.body.classList.remove('warp-reverse');
+                    btn.innerHTML = '<i class="fas fa-check-circle"></i> Mission Launched!';
+                    btn.style.background = 'linear-gradient(135deg, #00ff88, #00cc66)';
+                    btn.style.borderColor = '#00ff88';
+
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        btn.style.background = 'transparent';
+                        btn.style.borderColor = 'var(--accent)';
+                        delete btn.dataset.flight;
+                    }, 2500);
+                });
+            }, 1100);
         });
     }
     
@@ -133,21 +171,12 @@ function setupMainInteractions() {
                 backToTop.classList.remove('igniting');
                 backToTop.classList.add('launching');
                 setTimeout(() => document.body.classList.remove('page-shake'), 400);
+                // Stars hit light speed once the rocket is at full throttle
+                setTimeout(() => document.body.classList.add('warp-speed'), 500);
 
-                const startY = window.scrollY;
-                const duration = Math.min(3000, Math.max(1400, startY * 0.6));
-                const t0 = performance.now();
-                // easeInOutCubic: slow build off the pad, full speed, then brake for landing
-                const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-                function step(now) {
-                    const p = Math.min((now - t0) / duration, 1);
-                    window.scrollTo(0, startY * (1 - ease(p)));
-                    if (p < 1) {
-                        requestAnimationFrame(step);
-                        return;
-                    }
-                    // Phase 3: touchdown — retro-burn descent, then fade out
+                momentumScrollTo(0, () => {
+                    // Phase 3: touchdown — drop out of warp, retro-burn descent, then fade out
+                    document.body.classList.remove('warp-speed');
                     backToTop.classList.remove('launching');
                     backToTop.classList.add('landing');
                     backToTop.addEventListener('animationend', function onLand() {
@@ -158,8 +187,7 @@ function setupMainInteractions() {
                             delete backToTop.dataset.flight;
                         }, 1200);
                     });
-                }
-                requestAnimationFrame(step);
+                });
             }, IGNITION_MS);
         });
     }

@@ -30,15 +30,21 @@ body {
     touch-action: manipulation;
 }
 
-/* Starfield background */
+/* Starfield background — oversized so the ambient drift never exposes an edge */
 .starfield {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
     z-index: -1;
     overflow: hidden;
+    animation: field-drift 90s ease-in-out infinite alternate;
+}
+
+@keyframes field-drift {
+    from { transform: translate(0, 0); }
+    to { transform: translate(-2%, -3%); }
 }
 
 .star {
@@ -167,12 +173,20 @@ body {
     border-radius: 2px;
 }
 
-/* Planet decorations */
+/* Planet decorations — slow wandering orbit */
 .planet {
     position: absolute;
     border-radius: 50%;
     z-index: -1;
-    animation: float 15s infinite ease-in-out;
+    animation: planet-drift 45s infinite ease-in-out;
+}
+
+@keyframes planet-drift {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(14px, -20px); }
+    50% { transform: translate(-10px, -34px); }
+    75% { transform: translate(-18px, -12px); }
+    100% { transform: translate(0, 0); }
 }
 
 .planet-1 {
@@ -192,7 +206,46 @@ body {
     right: 10%;
     background: radial-gradient(circle at 30% 30%, #4cc9f0, #2fbde6, #0a0a2a);
     box-shadow: 0 0 25px rgba(76, 201, 240, 0.5);
-    animation-delay: 2s;
+    animation-duration: 60s;
+    animation-delay: -20s;
+    animation-direction: reverse;
+}
+
+/* Warp speed — stars streak downward as the rocket climbs
+   (warp-reverse: traveling down the page, stars streak upward) */
+body.warp-speed .star,
+body.warp-reverse .star {
+    animation: star-warp var(--warp-dur, 0.5s) linear infinite;
+    animation-delay: var(--warp-delay, 0s);
+    border-radius: 40%;
+}
+
+body.warp-reverse .star {
+    animation-direction: reverse;
+}
+
+@keyframes star-warp {
+    0% {
+        transform: translateY(-110vh) scaleY(8);
+        opacity: 0;
+    }
+    15% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh) scaleY(30);
+        opacity: 0.9;
+    }
+}
+
+body.warp-speed .planet,
+body.warp-reverse .planet {
+    filter: blur(8px);
+    opacity: 0.35;
+}
+
+.planet {
+    transition: filter 0.5s ease, opacity 0.5s ease;
 }
 
 /* Performance mode */
@@ -201,6 +254,10 @@ body {
 }
 
 .performance-mode .planet {
+    animation: none !important;
+}
+
+.performance-mode .starfield {
     animation: none !important;
 }
 
